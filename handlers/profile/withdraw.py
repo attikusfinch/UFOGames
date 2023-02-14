@@ -14,11 +14,16 @@ from handlers.profile.states import WithdrawState
 
 from keyboard.cancel_button import *
 
+from utils.ufo_wallet import UfoUtils
+from database.users_db import UserWallet
 
 start_withdraw_router = Router()
 
 wallet_db = Wallet()
 withdraw_db = WithdrawHistory()
+user_wallet_db = UserWallet()
+
+ufo_wallet = UfoUtils()
 
 @start_withdraw_router.callback_query(F.data == "withdraw_button")
 async def withdraw(ctx: types.CallbackQuery, state: FSMContext):
@@ -32,12 +37,12 @@ async def withdraw(ctx: types.CallbackQuery, state: FSMContext):
     
     withdraw = await withdraw_db.get_withdraw_address(user_id)
     if withdraw is not None:
-        await ctx.message.edit_text(_("👛 Вы уже создали запрос на вывод"), reply_markup=await get_profile_button())
+        await ctx.message.edit_text(_("👛 Ваш запрос на вывод обрабатывается"), reply_markup=await get_profile_button())
         await state.clear()
         return
 
     await ctx.message.edit_text(
-        _("📤 Введите сумму LAVE для вывода"),
+        _("📤 Введите сумму UFO для вывода"),
         parse_mode="HTML",
         reply_markup=await get_cancel_button()
         )
@@ -45,6 +50,7 @@ async def withdraw(ctx: types.CallbackQuery, state: FSMContext):
     await state.set_state(WithdrawState.get_amount)
 
 @start_withdraw_router.message(WithdrawState.get_amount)
+@start_withdraw_router.callback_query(WithdrawState.get_amount)
 async def get_amount(ctx: types.Message, state: FSMContext):
     user_id = ctx.from_user.id
 
@@ -64,20 +70,14 @@ async def get_amount(ctx: types.Message, state: FSMContext):
     
     await state.update_data(amount=amount)
     
-    if amount < 100:
-        await ctx.reply(_("❌ Сумма должна быть больше 100 LAVE"), reply_markup=await get_profile_button())
+    if amount < 1000:
+        await ctx.reply(_("❌ Сумма должна быть больше 1000 UFO"), reply_markup=await get_profile_button())
         await state.clear()
         return
     
-    ton = await wallet_db.get_ton(user_id)
-    if ton < 0.05:
-        await ctx.reply(_("❌ Недостаточно TON для вывода"), reply_markup=await get_profile_button())
-        await state.clear()
-        return
-    
-    lave = await wallet_db.get_lave(user_id)
-    if lave < amount:
-        await ctx.reply(_("❌ Недостаточно LAVE для вывода"), reply_markup=await get_profile_button())
+    UFO = await wallet_db.get_ufo(user_id)
+    if UFO < amount:
+        await ctx.reply(_("❌ Недостаточно UFO для вывода"), reply_markup=await get_profile_button())
         await state.clear()
         return
     
@@ -86,8 +86,8 @@ async def get_amount(ctx: types.Message, state: FSMContext):
     await ctx.reply(
         _("<b>📤 Подтверждение вывода</b>" + "\n" + "\n" +
 
-        "Сумма: <code>{}</code> LAVE" + "\n" + 
-        "Комиссия: <code>0.05</code> TON" + "\n" +
+        "Сумма: <code>{}</code> UFO" + "\n" + 
+        "Комиссия: <code>1</code> UFO" + "\n" +
         "Адрес: <code>{}</code>").format(amount, wallet),
         parse_mode="HTML",
         reply_markup=await get_withdraw_buttons(user_id)
@@ -103,14 +103,18 @@ async def accept_approve(ctx: types.CallbackQuery, state: FSMContext):
     
     amount = data["amount"]
     
-    wallet = await wallet_db.get_wallet(user_id)
+    withdraw_wallet = await wallet_db.get_wallet(user_id)
     
-    await wallet_db.set_lave(user_id, amount, False)
-    await wallet_db.set_ton(user_id, 0.05, False)
+    tx_id = await ufo_wallet.withdraw(withdraw_wallet, amount-1) # - fee
+
+    if tx_id is None:
+        await ctx.answer(_("API перегруженно, попробуйте снова позже"), show_alert=True)
+        return
     
-    await withdraw_db.set_withdraw(user_id, wallet, amount)
+    await wallet_db.set_ufo(user_id, amount, False)
+    await withdraw_db.set_withdraw(user_id, withdraw_wallet, amount)
     
-    await ctx.message.edit_text(_("{} LAVE скоро будут переведены на ваш кошелек 👛").format(amount), parse_mode="HTML")
+    await ctx.message.edit_text(_("<b>{} UFO</b> скоро будут переведены на ваш кошелек 👛").format(amount), parse_mode="HTML")
     await state.clear()
 
 @start_withdraw_router.callback_query(WithdrawState.get_approve, F.data == "cancel_withdraw_button")

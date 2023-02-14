@@ -5,8 +5,10 @@ from dotenv import load_dotenv
 
 import json
 
+import ufobit
+
 WORKDIR = Path(__file__).parent
-I18N_DOMAIN = "lave_bot"
+I18N_DOMAIN = "ufo_bot"
 LOCALES_DIR = WORKDIR / "locales"
 
 with open('config.env', 'r') as env_file:
@@ -15,10 +17,9 @@ with open('config.env', 'r') as env_file:
 TOKEN = os.getenv("TOKEN")
 
 WALLET = os.getenv("WALLET")
-TONCENTER_API_TOKEN = os.getenv("TONCENTER_API_TOKEN")
 
-LAVE = os.getenv("LAVE") # чтобы его узнать, отправьте lave сами себе и посмотрите в explorer'е
+wallet_private = os.getenv("PRIVATE_KEY")
 
-wallet_mnemonics = json.loads(os.getenv("MNEMONIC"))
+main_wallet = ufobit.Key(wallet_private)
 
 SUPPORT_ID = 5802571273

@@ -35,15 +35,15 @@ async def start_game(ctx: types.CallbackQuery):
                                     reply_markup=await get_game_button(user_id))
         return
 
-    balance = await wallet_db.get_lave(user_id)
+    balance = await wallet_db.get_ufo(user_id)
     bet = await game_db.get_bet(game_id)
 
     if balance < bet:
-        await ctx.message.edit_text(_("❕ Ошибка, на вашем балансе недостаточно LAVE."),
+        await ctx.message.edit_text(_("❕ Ошибка, на вашем балансе недостаточно UFO."),
                                     reply_markup=await get_game_button(user_id))
         return
     
-    await wallet_db.set_lave(user_id, bet, False)
+    await wallet_db.set_ufo(user_id, bet, False)
 
     game_type = await game_db.get_game_type(game_id)
     
@@ -62,7 +62,7 @@ async def dice_game(ctx, game_id, user_id, bet):
     
     await ctx.message.edit_text(
                           _("👊 <i>Вы кинули кубики <b>№ {}</b>" + 
-                          " на сумму {} LAVE, через 3 секунды, они решат вышу судьбу</i>").format(
+                          " на сумму {} UFO, через 3 секунды, они решат вышу судьбу</i>").format(
                               game_id,
                               bet
                               ),
@@ -70,7 +70,7 @@ async def dice_game(ctx, game_id, user_id, bet):
 
     await dp.send_message(bank_id,
                           _("👊 @{} <i>Вы кинули кубики <b>№ {}</b>" + 
-                          " на сумму {} LAVE, через 3 секунды, они решат вышу судьбу</i>").format(
+                          " на сумму {} UFO, через 3 секунды, они решат вышу судьбу</i>").format(
                               ctx.from_user.username,
                               game_id,
                               bet
@@ -101,7 +101,7 @@ async def card_game(ctx, game_id, user_id, bet):
     
     await ctx.message.edit_text(
                           _("👌 <i>Вы успешно присоединились к игре <b>№ {}</b>" + 
-                          " на сумму {} LAVE</i>").format(
+                          " на сумму {} UFO</i>").format(
                               game_id,
                               bet
                               ),
@@ -109,7 +109,7 @@ async def card_game(ctx, game_id, user_id, bet):
     
     await dp.send_message(bank_id, 
                           _("👌 @{} <i>присоединился к игре <b>№ {}</b>" + 
-                          " на сумму {} LAVE , ожидайте свой ход.</i>").format(
+                          " на сумму {} UFO , ожидайте свой ход.</i>").format(
                               ctx.from_user.username,
                               game_id,
                               bet
@@ -271,7 +271,7 @@ async def end_game(game_id, bank_id, player_id, win_id, reason):
         "<b>🕹 Результат игры №</b> {}:" + "\n" +
         "╠ @{} - {}  ⚔️ @{} - {}" + "\n" +
         "║ <b>Победитель:</b>  @{} [{}]" + "\n" +
-        "╚ <b>Cумма выигрыша:</b>  <code>{}</code> LAVE"
+        "╚ <b>Cумма выигрыша:</b>  <code>{}</code> UFO"
     ).format(
         game_id,
         bank_username,
@@ -288,10 +288,10 @@ async def end_game(game_id, bank_id, player_id, win_id, reason):
     await stats_db.update_stats(player_id, (not bank_win))
     await stats_db.update_stats(bank_id, bank_win)
 
-    await wallet_db.set_lave(win_id, bet*2)
+    await wallet_db.set_ufo(win_id, bet*2)
     
     await global_stats_db.set_game_count()
-    await global_stats_db.set_lave_count(bet)
+    await global_stats_db.set_ufo_count(bet)
 
     await game_db.delete_game(game_id)
 

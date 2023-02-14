@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2023-01-20 18:41+0500\n"
+"POT-Creation-Date: 2023-02-14 22:14+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -31,9 +31,9 @@ msgstr ""
 
 #: handlers/game/create_game.py:62
 msgid ""
-"<b>💵 Укажите сумму LAVE для создания игры (Минимум 1000)</b>\n"
+"<b>💵 Укажите сумму UFO для создания игры (Минимум 1000)</b>\n"
 "--------------------------\n"
-"<i>💰 LAVE: {}</i>"
+"<i>💰 UFO: {}</i>"
 msgstr ""
 
 #: handlers/game/create_game.py:85
@@ -41,7 +41,7 @@ msgid "❕ Отмена"
 msgstr ""
 
 #: handlers/game/create_game.py:90 handlers/game/create_game.py:107
-msgid "❕ Ошибка, сумма игры должна быть больше 1000 LAVE"
+msgid "❕ Ошибка, сумма игры должна быть больше 1000 UFO"
 msgstr ""
 
 #: handlers/game/create_game.py:97
@@ -53,7 +53,7 @@ msgid "❕ Ошибка, введите /start"
 msgstr ""
 
 #: handlers/game/create_game.py:112
-msgid "❕ Ошибка, на вашем балансе недостаточно LAVE"
+msgid "❕ Ошибка, на вашем балансе недостаточно UFO"
 msgstr ""
 
 #: handlers/game/create_game.py:121
@@ -70,18 +70,18 @@ msgid "❕ Ошибка, игра уже идет, выберите другую
 msgstr ""
 
 #: handlers/game/play_game.py:42
-msgid "❕ Ошибка, на вашем балансе недостаточно LAVE."
+msgid "❕ Ошибка, на вашем балансе недостаточно UFO."
 msgstr ""
 
 #: handlers/game/play_game.py:64
 msgid ""
-"👊 <i>Вы кинули кубики <b>№ {}</b> на сумму {} LAVE, через 3 секунды, они "
+"👊 <i>Вы кинули кубики <b>№ {}</b> на сумму {} UFO, через 3 секунды, они "
 "решат вышу судьбу</i>"
 msgstr ""
 
 #: handlers/game/play_game.py:72
 msgid ""
-"👊 @{} <i>Вы кинули кубики <b>№ {}</b> на сумму {} LAVE, через 3 секунды, "
+"👊 @{} <i>Вы кинули кубики <b>№ {}</b> на сумму {} UFO, через 3 секунды, "
 "они решат вышу судьбу</i>"
 msgstr ""
 
@@ -90,13 +90,13 @@ msgid "Удача"
 msgstr ""
 
 #: handlers/game/play_game.py:103
-msgid "👌 <i>Вы успешно присоединились к игре <b>№ {}</b> на сумму {} LAVE</i>"
+msgid "👌 <i>Вы успешно присоединились к игре <b>№ {}</b> на сумму {} UFO</i>"
 msgstr ""
 
 #: handlers/game/play_game.py:111
 msgid ""
-"👌 @{} <i>присоединился к игре <b>№ {}</b> на сумму {} LAVE , ожидайте "
-"свой ход.</i>"
+"👌 @{} <i>присоединился к игре <b>№ {}</b> на сумму {} UFO , ожидайте свой"
+" ход.</i>"
 msgstr ""
 
 #: handlers/game/play_game.py:128
@@ -147,7 +147,7 @@ msgid ""
 "<b>🕹 Результат игры №</b> {}:\n"
 "╠ @{} - {}  ⚔️ @{} - {}\n"
 "║ <b>Победитель:</b>  @{} [{}]\n"
-"╚ <b>Cумма выигрыша:</b>  <code>{}</code> LAVE"
+"╚ <b>Cумма выигрыша:</b>  <code>{}</code> UFO"
 msgstr ""
 
 #: handlers/game/user_game.py:25
@@ -182,113 +182,122 @@ msgid ""
 "🏅 Ты на <b>{}</b> месте"
 msgstr ""
 
-#: handlers/profile/deposit.py:15
+#: handlers/profile/deposit.py:30
 msgid ""
 "📥 Используйте адрес ниже для пополнения баланса.\n"
 "\n"
-"Монета: Lavandos, (LAVE) или TON\n"
-"Сеть: The Open Network – TON\n"
-"Коментарий: <code>{}</code>\n"
+"Монета: Uniform Fiscal Object (UFO)\n"
 "\n"
 "<code>{}</code>\n"
 "\n"
-"<b>ЧТОБЫ ВАШИ СРЕДСТВА ПОПАЛИ НА ВАШ БАЛАНС ВАМ НУЖНО ОБЯЗАТЕЛЬНО ВВЕСТИ "
-"КОМЕНТАРИЙ К ПЛАТЕЖУ, ИНАЧЕ ОНИ БУДУТ НАВСЕГДА УТЕРЯНЫ. ТАКЖЕ "
-"АДМИНИСТРАЦИЯ НЕ НЕСЕТ НИКАКОЙ ОТВЕТСТВЕННОСТИ ПРИ НЕ УКАЗАНИИ ПАРОЛЯ "
-"И/ИЛИ ПЕРЕВОДОВ С ДРУГИХ КОШЕЛЬКОВ КРОМЕ TONKEEPER. И ПОМНИТЕ, "
-"КРИПТОВАЛЮТА TONCOIN НЕ ИСПОЛЬЗУЕТСЯ В БОТЕ, А НУЖНА ЧТОБ ОПЛАТИТЬ "
-"КОМИССИЮ ПРИ ВЫВОДЕ ВАШИХ СРЕДСТВ.</b>"
+"<b>ПЕРЕД ОТПРАВКОЙ ПЕРЕПРОВЕРЬТЕ ПРАВИЛЬНО-ЛИ ВЫ ВВЕЛИ АДРЕС КОШЕЛЬКА.\n"
+"МИНИМАЛЬНАЯ СУММА ПОПОЛНЕНИЯ 1000 UFO. 1 UFO БУДЕТ ИСПОЛЬЗОВАНО ДЛЯ "
+"ОПЛАТЫ КОМИССИИ.</b>"
 msgstr ""
 
-#: handlers/profile/wallet.py:22
+#: handlers/profile/deposit.py:53
+msgid ""
+"<b>Баланс должен быть больше 1000 UFO</b>\n"
+"Чтобы UFO попали на ваш баланс пополните его на {} UFO"
+msgstr ""
+
+#: handlers/profile/deposit.py:64 handlers/profile/withdraw.py:111
+msgid "API перегруженно, попробуйте снова позже"
+msgstr ""
+
+#: handlers/profile/deposit.py:69
+msgid "💸 Успешное пополнение {} UFO !"
+msgstr ""
+
+#: handlers/profile/wallet.py:20
 msgid ""
 "✍️ Введите адрес своего кошелька.\n"
 "\n"
 "<b>⚠️ Внимание! Используйте только адрес к которому у вас есть доступ по "
 "seed-фразе.</b>\n"
 "\n"
-"🚫 Не используйте адреса, выданные вам такими сервисами как: Cryptobot, "
-"Wallet, TON Rocket,xJetSwap или любая криптобиржа"
+"🚫 Не используйте адреса, выданные вам такими сервисами как: Graviex, "
+"Hotbit."
 msgstr ""
 
-#: handlers/profile/wallet.py:41
+#: handlers/profile/wallet.py:39
+msgid "❗️ Кошельки uf1 не поддерживаются"
+msgstr ""
+
+#: handlers/profile/wallet.py:47
 msgid "❗️ Кошелек указан не верно, попробуйте снова"
 msgstr ""
 
-#: handlers/profile/wallet.py:51
+#: handlers/profile/wallet.py:57
 msgid "❗️ Введите /start"
 msgstr ""
 
-#: handlers/profile/wallet.py:58
+#: handlers/profile/wallet.py:64
 msgid ""
 "✅ Кошелек успешно закреплен за вашим аккаунтом, теперь вы можете выводить"
-" ваши LAVE."
+" ваши UFO."
 msgstr ""
 
-#: handlers/profile/withdraw.py:29
+#: handlers/profile/withdraw.py:34
 msgid "👛 Привяжите кошелек"
 msgstr ""
 
-#: handlers/profile/withdraw.py:35
-msgid "👛 Вы уже создали запрос на вывод"
-msgstr ""
-
 #: handlers/profile/withdraw.py:40
-msgid "📤 Введите сумму LAVE для вывода"
+msgid "👛 Ваш запрос на вывод обрабатывается"
 msgstr ""
 
-#: handlers/profile/withdraw.py:52 handlers/profile/withdraw.py:120
+#: handlers/profile/withdraw.py:45
+msgid "📤 Введите сумму UFO для вывода"
+msgstr ""
+
+#: handlers/profile/withdraw.py:58 handlers/profile/withdraw.py:124
 msgid "❌ Отмена"
 msgstr ""
 
-#: handlers/profile/withdraw.py:59
+#: handlers/profile/withdraw.py:65
 msgid "❌ Количество должно быть числом"
 msgstr ""
 
-#: handlers/profile/withdraw.py:68
-msgid "❌ Сумма должна быть больше 100 LAVE"
-msgstr ""
-
 #: handlers/profile/withdraw.py:74
-msgid "❌ Недостаточно TON для вывода"
+msgid "❌ Сумма должна быть больше 1000 UFO"
 msgstr ""
 
 #: handlers/profile/withdraw.py:80
-msgid "❌ Недостаточно LAVE для вывода"
+msgid "❌ Недостаточно UFO для вывода"
 msgstr ""
 
 #: handlers/profile/withdraw.py:87
 msgid ""
 "<b>📤 Подтверждение вывода</b>\n"
 "\n"
-"Сумма: <code>{}</code> LAVE\n"
-"Комиссия: <code>0.05</code> TON\n"
+"Сумма: <code>{}</code> UFO\n"
+"Комиссия: <code>1</code> UFO\n"
 "Адрес: <code>{}</code>"
 msgstr ""
 
-#: handlers/profile/withdraw.py:113
-msgid "{} LAVE скоро будут переведены на ваш кошелек 👛"
+#: handlers/profile/withdraw.py:117
+msgid "<b>{} UFO</b> скоро будут переведены на ваш кошелек 👛"
 msgstr ""
 
-#: handlers/start/main.py:30 handlers/start/main.py:37
+#: handlers/start/main.py:35 handlers/start/main.py:42
 msgid "<i>🌍 Выберите язык</i>"
 msgstr ""
 
-#: handlers/start/main.py:69 handlers/start/main.py:76
+#: handlers/start/main.py:79 handlers/start/main.py:86
 msgid "👑 Добро пожаловать, <b>{}</b>"
 msgstr ""
 
-#: handlers/start/main.py:89
-msgid "На данный момент пользователи сыграли {} игр на сумму {} LAVE."
+#: handlers/start/main.py:99
+msgid "На данный момент пользователи сыграли {} игр на сумму {} ufo."
 msgstr ""
 
-#: handlers/start/main.py:108
+#: handlers/start/main.py:118
 msgid ""
 "🔐 id: <code>{}</code>\n"
 "\n"
 "<b>💰 Баланс:</b>\n"
-"╠ <code>{}</code> <a href='https://t.me/lavetoken'>Lavandos, (LAVE)</a>\n"
-"╚ <code>{}</code> <a href='https://ton.org'>The Open Network, (TON)</a>\n"
+"╚ <code>{}</code> <a href='https://ufobject.com/'>Uniform Fiscal Object "
+"(UFO)</a>\n"
 "\n"
 "<b>👛 Привязанный кошелек:</b>\n"
 "<code>{}</code>\n"
@@ -304,7 +313,7 @@ msgstr ""
 #: keyboard/cancel_button.py:36 keyboard/game_button.py:54
 #: keyboard/game_button.py:94 keyboard/game_button.py:110
 #: keyboard/main_button.py:47 keyboard/main_button.py:61
-#: keyboard/withdraw_button.py:19
+#: keyboard/withdraw_button.py:13
 msgid "назад"
 msgstr ""
 
@@ -313,7 +322,7 @@ msgid "😢 Активных игр сейчас нет"
 msgstr ""
 
 #: keyboard/game_button.py:28
-msgid "{} #Game_{} | Сумма {} LAVE"
+msgid "{} #Game_{} | Сумма {} UFO"
 msgstr ""
 
 #: keyboard/game_button.py:38 keyboard/game_button.py:104
@@ -341,7 +350,7 @@ msgid "😢 Вы не создали игры"
 msgstr ""
 
 #: keyboard/game_button.py:83
-msgid "{} | {} #Game_{} | Сумма {} LAVE"
+msgid "{} | {} #Game_{} | Сумма {} UFO"
 msgstr ""
 
 #: keyboard/game_button.py:88
@@ -385,11 +394,11 @@ msgid "🏆 Топ 10 игроков"
 msgstr ""
 
 #: keyboard/main_button.py:37
-msgid "💬 Чат LAVE"
+msgid "💬 Чат UFO"
 msgstr ""
 
 #: keyboard/main_button.py:37
-msgid "https://t.me/lavetoken"
+msgid "https://t.me/UFObjectRU"
 msgstr ""
 
 #: keyboard/main_button.py:38
@@ -397,7 +406,7 @@ msgid "📕 Правила игры"
 msgstr ""
 
 #: keyboard/main_button.py:42
-msgid "⚜️ Купить / продать LAVE"
+msgid "⚜️ Купить / продать UFO"
 msgstr ""
 
 #: keyboard/main_button.py:56
@@ -416,23 +425,15 @@ msgstr ""
 msgid "👛 Привязать кошелек"
 msgstr ""
 
-#: keyboard/withdraw_button.py:10
-msgid "TonKeeper"
+#: keyboard/withdraw_button.py:9
+msgid "🔄 Проверить"
 msgstr ""
 
-#: keyboard/withdraw_button.py:14
-msgid "Отправить LAVE"
-msgstr ""
-
-#: keyboard/withdraw_button.py:15
-msgid "Отправить TON"
-msgstr ""
-
-#: keyboard/withdraw_button.py:28
+#: keyboard/withdraw_button.py:22
 msgid "✅ Подтвердить"
 msgstr ""
 
-#: keyboard/withdraw_button.py:32
+#: keyboard/withdraw_button.py:26
 msgid "❌ Отменить"
 msgstr ""
 

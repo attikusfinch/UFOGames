@@ -56,21 +56,21 @@ async def set_game(ctx: types.CallbackQuery, state: FSMContext):
     
     await state.update_data(game_type=game_type)
     
-    balance = await wallet_db.get_lave(user_id)
+    balance = await wallet_db.get_ufo(user_id)
 
     await ctx.message.edit_text(
-        _("<b>💵 Укажите сумму LAVE для создания игры (Минимум 1000)</b>" + "\n" + 
+        _("<b>💵 Укажите сумму UFO для создания игры (Минимум 1000)</b>" + "\n" + 
           "--------------------------" + "\n" + 
-          "<i>💰 LAVE: {}</i>").format(balance), 
+          "<i>💰 UFO: {}</i>").format(balance), 
         parse_mode="HTML",
         reply_markup=await get_game_cancel_button()
     )
 
-    await state.set_state(GameState.get_lave_count)
+    await state.set_state(GameState.get_ufo_count)
 
-@start_game_router.message(GameState.get_lave_count)
+@start_game_router.message(GameState.get_ufo_count)
 async def start_game(ctx: types.Message, state: FSMContext):
-    lave_bet = ctx.text
+    ufo_bet = ctx.text
     
     user_id = ctx.from_user.id
     
@@ -78,7 +78,7 @@ async def start_game(ctx: types.Message, state: FSMContext):
     
     game_type = data["game_type"]
     
-    balance = await wallet_db.get_lave(user_id)
+    balance = await wallet_db.get_ufo(user_id)
     game_count = await game_db.get_game_count(user_id)
     
     if isinstance(ctx, types.CallbackQuery):
@@ -86,12 +86,12 @@ async def start_game(ctx: types.Message, state: FSMContext):
         await state.clear()
         return
     
-    if lave_bet.isdigit() == False:
-        await ctx.reply(_("❕ Ошибка, сумма игры должна быть больше 1000 LAVE"), reply_markup=await get_game_cancel_button())
+    if ufo_bet.isdigit() == False:
+        await ctx.reply(_("❕ Ошибка, сумма игры должна быть больше 1000 UFO"), reply_markup=await get_game_cancel_button())
         await state.clear()
         return
     
-    lave_bet = int(lave_bet)
+    ufo_bet = int(ufo_bet)
 
     if game_count > 5:
         await ctx.reply(_("❕ Ошибка, нельзя создать больше 5 игр"), reply_markup=await get_game_cancel_button())
@@ -103,18 +103,18 @@ async def start_game(ctx: types.Message, state: FSMContext):
         await state.clear()
         return
     
-    if lave_bet < 1000:
-        await ctx.reply(_("❕ Ошибка, сумма игры должна быть больше 1000 LAVE"), reply_markup=await get_game_cancel_button())
+    if ufo_bet < 1000:
+        await ctx.reply(_("❕ Ошибка, сумма игры должна быть больше 1000 UFO"), reply_markup=await get_game_cancel_button())
         await state.clear()
         return
 
-    if lave_bet > balance:
-        await ctx.reply(_("❕ Ошибка, на вашем балансе недостаточно LAVE"), reply_markup=await get_game_cancel_button())
+    if ufo_bet > balance:
+        await ctx.reply(_("❕ Ошибка, на вашем балансе недостаточно UFO"), reply_markup=await get_game_cancel_button())
         await state.clear()
         return
 
-    await wallet_db.set_lave(user_id, lave_bet, False)
-    await game_db.add_game(lave_bet, user_id, game_type)
+    await wallet_db.set_ufo(user_id, ufo_bet, False)
+    await game_db.add_game(ufo_bet, user_id, game_type)
     
     emoji = await get_game_emoji(int(game_type))
     

@@ -42,8 +42,8 @@ async def tip(ctx: types.Message):
     
     # Perform the database query to transfer the money
     #  ADD YOUR DATABASE QUERY HERE, use receiver_id as receiver
-    wallet_db.set_lave(user_id, amount, False)
-    wallet_db.set_lave(receiver_id, amount)
+    wallet_db.set_ufo(user_id, amount, False)
+    wallet_db.set_ufo(receiver_id, amount)
     
     # Confirm the transaction to the user
     if comment is not None:

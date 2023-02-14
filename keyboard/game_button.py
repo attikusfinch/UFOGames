@@ -25,7 +25,7 @@ async def get_game_button(user_id, page: int = 0, type = 1) -> InlineKeyboardMar
     for game in games:
         markup.row(
             InlineKeyboardButton(
-                text=_('{} #Game_{} | Сумма {} LAVE').format(emoji, game[0], game[2]),
+                text=_('{} #Game_{} | Сумма {} UFO').format(emoji, game[0], game[2]),
                 callback_data=f'{game[0]}_start_game_button'),
             width=1)
 
@@ -80,7 +80,7 @@ async def get_mygame_button(user_id, active: bool = False) -> InlineKeyboardMark
         emoji = await get_game_emoji(game[1])
         markup.row(
             InlineKeyboardButton(
-                text=_('{} | {} #Game_{} | Сумма {} LAVE').format(action_emoji ,emoji, game[0], game[2]),
+                text=_('{} | {} #Game_{} | Сумма {} UFO').format(action_emoji ,emoji, game[0], game[2]),
                 callback_data=f'{game[0]}_{action_name}_game_button'),
             width=1)
 

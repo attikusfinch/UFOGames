@@ -2,7 +2,7 @@ from aiogram import types
 from aiogram import Router
 from create_bot import dp, i18n
 from keyboard.main_button import *
-from database.users_db import Users
+from database.users_db import Users, UserWallet
 from database.wallet_db import Wallet
 from database.stats_db import Stats, GlobalStats
 from create_bot import _
@@ -13,12 +13,17 @@ from aiogram import F, Router
 from aiogram.utils.i18n import I18n
 from settings import I18N_DOMAIN, LOCALES_DIR
 
+from utils.ufo_wallet import UfoUtils
+
 start_main_router = Router()
 
 user_db = Users()
+user_wallet_db = UserWallet()
 stat_db = Stats()
 global_stat_db = GlobalStats()
 wallet_db = Wallet()
+
+ufo_payments = UfoUtils()
 
 @start_main_router.message(Command(BaseCommands.SETTINGS))
 @start_main_router.callback_query(F.data == "settings_button")
@@ -53,12 +58,17 @@ async def start(ctx: types.CallbackQuery):
             
             await user_db.add_user(user_id, language)
             await stat_db.add_stats(user_id)
-            await wallet_db.add_wallet(user_id, 0, 0)
+            await wallet_db.add_wallet(user_id, 0)
 
     if await user_db.get_language(user_id) is None:
         await settings(ctx)
         return
-    
+
+    if await user_wallet_db.get_address(user_id) is None:
+        address, private =  await ufo_payments.create_wallet()
+        
+        await user_wallet_db.set_wallet(user_id, address, private)
+
     if language is not None:
         # костыль, надо подпарвить как-то
         i18n_new = I18n(path=LOCALES_DIR, default_locale=language, domain=I18N_DOMAIN)
@@ -83,10 +93,10 @@ async def info(ctx: types.CallbackQuery):
     user_id = ctx.from_user.id
     
     game_count = await global_stat_db.get_game_count()
-    lave_count = await global_stat_db.get_lave_count()
+    ufo_count = await global_stat_db.get_ufo_count()
 
     await ctx.message.edit_text(
-            _("На данный момент пользователи сыграли {} игр на сумму {} LAVE.").format(game_count, lave_count), 
+            _("На данный момент пользователи сыграли {} игр на сумму {} ufo.").format(game_count, ufo_count), 
             parse_mode="HTML", 
             reply_markup=await get_info_buttons(user_id)
         )
@@ -95,8 +105,8 @@ async def info(ctx: types.CallbackQuery):
 async def profile(ctx: types.CallbackQuery):
     user_id = ctx.from_user.id
     
-    lave_balance = await wallet_db.get_lave(user_id)
-    ton_balance = await wallet_db.get_ton(user_id)
+    ufo_balance = await wallet_db.get_ufo(user_id)
+
     withdraw_wallet = await wallet_db.get_wallet(user_id)
     
     if withdraw_wallet is None:
@@ -107,8 +117,7 @@ async def profile(ctx: types.CallbackQuery):
     await ctx.message.edit_text(
         _("🔐 id: <code>{}</code>" + "\n\n" +
         "<b>💰 Баланс:</b>" + "\n" +
-        "╠ <code>{}</code> <a href='https://t.me/lavetoken'>Lavandos, (LAVE)</a>" + "\n" +
-        "╚ <code>{}</code> <a href='https://ton.org'>The Open Network, (TON)</a>" + "\n\n" +
+        "╚ <code>{}</code> <a href='https://ufobject.com/'>Uniform Fiscal Object (UFO)</a>" + "\n\n" +
         "<b>👛 Привязанный кошелек:</b>" + "\n" +
         "<code>{}</code>" + "\n\n" +
         "<b>📊 Статистика:</b>" + "\n" +
@@ -116,8 +125,7 @@ async def profile(ctx: types.CallbackQuery):
         "╠ Победы: <code>{}</code>" + "\n" +
         "╚ Прогрыши: <code>{}</code>").format(
             ctx.from_user.id,
-            lave_balance,
-            ton_balance,
+            ufo_balance,
             withdraw_wallet,
             stat_game,
             stat_win,

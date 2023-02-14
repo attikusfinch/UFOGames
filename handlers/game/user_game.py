@@ -53,7 +53,7 @@ async def delete_my_game(ctx: types.CallbackQuery):
             reply_markup=await get_mygame_button(user_id))
         return
     
-    await wallet_db.set_lave(user_id, amount, True)
+    await wallet_db.set_ufo(user_id, amount, True)
     
     await ctx.message.edit_text(
         _("❌ Игра отменена"),

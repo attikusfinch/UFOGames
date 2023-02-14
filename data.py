@@ -11,6 +11,16 @@ async def create_user_table():
                     lang STRING NOT NULL
                 );
             """)
+            
+            await cursor.execute("""
+                CREATE TABLE IF NOT EXISTS wallets (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    user_id INTEGER NOT NULL,
+                    address STRING NOT NULL,
+                    private STRING NOT NULL
+                );
+            """)
+            
             await connection.commit()
 
 async def create_wallet_table():
@@ -21,8 +31,7 @@ async def create_wallet_table():
                 CREATE TABLE IF NOT EXISTS wallet (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
                     user_id INTEGER NOT NULL,
-                    lave_count FLOAT NOT NULL,
-                    ton_count FLOAT NOT NULL,
+                    ufo_count FLOAT NOT NULL,
                     withdraw_address STRING
                 );
             """)
@@ -47,7 +56,7 @@ async def create_statistic_table():
             await cursor.execute("""
                 CREATE TABLE IF NOT EXISTS global_stats (
                     game_count INTEGER NOT NULL,
-                    lave_count INTEGER NOT NULL
+                    ufo_count INTEGER NOT NULL
                 );
             """)
 
@@ -55,7 +64,7 @@ async def create_statistic_table():
             data = await cursor.fetchone()
             
             if data is None:
-                await cursor.execute("INSERT INTO global_stats (game_count, lave_count) VALUES (0, 0);")
+                await cursor.execute("INSERT INTO global_stats (game_count, ufo_count) VALUES (0, 0);")
 
             await connection.commit()
 

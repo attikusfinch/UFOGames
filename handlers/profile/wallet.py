@@ -10,8 +10,6 @@ from keyboard.cancel_button import *
 
 from handlers.profile.states import WalletState
 
-from utils.checker import detect_address
-
 start_wallet_router = Router()
 
 wallet_db = Wallet()
@@ -23,11 +21,11 @@ async def set_wallet(ctx: types.CallbackQuery, state: FSMContext):
 
 	    "<b>⚠️ Внимание! Используйте только адрес к которому у вас есть доступ по seed-фразе.</b>" + "\n" + "\n" +
 
-	    "🚫 Не используйте адреса, выданные вам такими сервисами как: Cryptobot, Wallet, TON Rocket,xJetSwap или любая криптобиржа"), 
+	    "🚫 Не используйте адреса, выданные вам такими сервисами как: Graviex, Hotbit."), 
         parse_mode="HTML", 
         reply_markup=await get_profile_button()
     )
-    
+
     await state.set_state(WalletState.get_wallet)
 
 @start_wallet_router.message(WalletState.get_wallet)
@@ -36,7 +34,15 @@ async def get_wallet(ctx: types.Message, state: FSMContext):
     
     wallet = ctx.text
     
-    if detect_address(wallet) is None:
+    if "0" in wallet:
+        await ctx.reply(
+            _("❗️ Кошельки uf1 не поддерживаются"),
+            reply_markup=await get_profile_button()
+            )
+        await state.clear()
+        return
+    
+    if not wallet.startswith(("U", "u", "C")):
         await ctx.reply(
             _("❗️ Кошелек указан не верно, попробуйте снова"),
             reply_markup=await get_profile_button()
@@ -55,7 +61,7 @@ async def get_wallet(ctx: types.Message, state: FSMContext):
         return
 
     await ctx.reply(
-        _("✅ Кошелек успешно закреплен за вашим аккаунтом, теперь вы можете выводить ваши LAVE."),
+        _("✅ Кошелек успешно закреплен за вашим аккаунтом, теперь вы можете выводить ваши UFO."),
         parse_mode="HTML",
         reply_markup=await get_profile_button()
     )

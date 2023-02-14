@@ -96,18 +96,18 @@ class GlobalStats:
                 await connection.commit()
                 return True
 
-    async def get_lave_count(self):
+    async def get_ufo_count(self):
         async with aiosqlite.connect('database/stats.db') as connection:
             async with connection.cursor() as cursor:
-                await cursor.execute("SELECT lave_count FROM global_stats")
+                await cursor.execute("SELECT ufo_count FROM global_stats")
                 data = await cursor.fetchone()
                 if data is None:
                     return None
                 return data[0]
 
-    async def set_lave_count(self, count):
+    async def set_ufo_count(self, count):
         async with aiosqlite.connect('database/stats.db') as connection:
             async with connection.cursor() as cursor:
-                await cursor.execute("UPDATE global_stats SET lave_count = lave_count + ?", (count,))
+                await cursor.execute("UPDATE global_stats SET ufo_count = ufo_count + ?", (count,))
                 await connection.commit()
                 return True
