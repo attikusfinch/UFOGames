@@ -13,6 +13,7 @@ from settings import WALLET
 
 from keyboard.withdraw_button import get_deposit_buttons
 from aiogram import types
+from aiogram.utils.markdown import hide_link
 
 start_deposit_router = Router()
 
@@ -25,8 +26,9 @@ async def deposit(ctx: types.CallbackQuery):
     user_id = ctx.from_user.id
     
     address = await user_wallet_db.get_address(user_id)
-    
+
     await ctx.message.edit_text(
+        f"{hide_link(f'https://api.qrserver.com/v1/create-qr-code/?size=300x300&data={address}')}" + "\n" +
         _("📥 Используйте адрес ниже для пополнения баланса." + "\n" + "\n" +
 
         "Монета: Uniform Fiscal Object (UFO)" + "\n" + "\n" + 
