@@ -2,9 +2,13 @@ from aiogram.utils.keyboard import InlineKeyboardBuilder, InlineKeyboardButton
 from create_bot import _
 
 
-async def get_deposit_buttons(user_id):
+async def get_deposit_buttons(address):
     markup = InlineKeyboardBuilder()
     
+    markup.row(
+        InlineKeyboardButton(text=_("EDGE WALLET"), url=f"https://deep.edge.app/pay/ufo/{address}"),
+        width=1)
+
     markup.row(
             InlineKeyboardButton(text=_("🔄 Проверить"), callback_data="check_transactions"),
             width=1)

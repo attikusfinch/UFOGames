@@ -38,7 +38,7 @@ async def deposit(ctx: types.CallbackQuery):
         "<b>ПЕРЕД ОТПРАВКОЙ ПЕРЕПРОВЕРЬТЕ ПРАВИЛЬНО-ЛИ ВЫ ВВЕЛИ АДРЕС КОШЕЛЬКА." + "\n" + 
         "МИНИМАЛЬНАЯ СУММА ПОПОЛНЕНИЯ 1000 UFO. 1 UFO БУДЕТ ИСПОЛЬЗОВАНО ДЛЯ ОПЛАТЫ КОМИССИИ.</b>").format(address),
         parse_mode="HTML",
-        reply_markup=await get_deposit_buttons(user_id)
+        reply_markup=await get_deposit_buttons(address)
         )
 
 @start_deposit_router.callback_query(F.data == "check_transactions")
@@ -49,6 +49,8 @@ async def check_transaction(ctx: types.CallbackQuery):
 
     balance = await ufo_wallet.get_balance(private)
     balance = round(balance)
+    
+    address = await user_wallet_db.get_address(user_id)
 
     if balance < 1000:
         await ctx.message.edit_text(
@@ -57,7 +59,7 @@ async def check_transaction(ctx: types.CallbackQuery):
                              1000-balance
                             )
                          , parse_mode="HTML"
-                         , reply_markup=await get_deposit_buttons(user_id))
+                         , reply_markup=await get_deposit_buttons(address))
         return
 
     tx_id = await ufo_wallet.send(private, WALLET, balance-1)
