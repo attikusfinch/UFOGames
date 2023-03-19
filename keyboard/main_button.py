@@ -35,11 +35,11 @@ async def get_info_buttons(user_id : int) -> InlineKeyboardMarkup:
     
     markup.row(
         InlineKeyboardButton(text=_("💬 Чат UFO"), url=_("https://t.me/UFObjectRU")),
-        InlineKeyboardButton(text=_("📕 Правила игры"), url="https://slabber.io/posts/1591"), 
+        InlineKeyboardButton(text=_("📕 Правила игры"), url="https://slabber.io/posts/2122"), 
         width=2)
     
     markup.row(
-        InlineKeyboardButton(text=_("⚜️ Купить / продать UFO"), url="https://slabber.io/posts/2122"),
+        InlineKeyboardButton(text=_("⚜️ Купить / продать UFO"), url="https://slabber.io/posts/1018"),
         width=2
     )
     
